@@ -4,11 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-root',
+    selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+    imports: [CommonModule, RouterOutlet],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.sass'
 })
 export class AppComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
