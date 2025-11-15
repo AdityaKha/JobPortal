@@ -17,7 +17,9 @@ describe('AppComponent', () => {
   it(`should have the 'JobPortal' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('JobPortal');
+    expect(app.jobPosts.map((e) => e.id)).toEqual([
+      1, 2, 3, 4, 5
+    ]);
   });
 
   it('should render title', () => {

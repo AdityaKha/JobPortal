@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.sass"
             ],
             "scripts": []
@@ -77,14 +78,9 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "sass",
             "assets": [
               "src/favicon.ico",
               "src/assets"

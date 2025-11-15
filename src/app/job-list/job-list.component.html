@@ -1,0 +1,37 @@
+<div class="job-container">
+
+  @for (job of jobPosts; track job.id) {
+
+    <mat-card class="job-card">
+
+      <mat-card-title>
+        {{ job.title }}
+      </mat-card-title>
+
+      <mat-card-content>
+
+        <p class="description">
+          {{ job.description }}
+        </p>
+
+        <p class="meta">
+          <strong>Experience:</strong> {{ job.experience }} years
+        </p>
+
+        <p class="meta">
+          <strong>Tech Stack:</strong> {{ job.techStack }}
+        </p>
+
+        @if (job.techStack) {
+          <p class="meta">
+            <strong>Location:</strong> {{ job.techStack }}
+          </p>
+        }
+
+      </mat-card-content>
+
+    </mat-card>
+
+  }
+
+</div>
