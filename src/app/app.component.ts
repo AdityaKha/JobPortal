@@ -20,23 +20,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.httpClient.get('http://localhost:8080/jobPosts')
       .subscribe({
-        next: (response) => this._populateJobPosts(response as any[]),
+        next: (response) => this.jobPosts = response as JobPost[],
         error: (err) => console.error('HTTP error:', err)
       });
   }
 
-  _populateJobPosts(data: any[]): void {
-    this.jobPosts = this.mapToJobPosts(data);
-  }
-
-  mapToJobPosts(data: any[]): JobPost[] {
-    return data.map(item => ({
-      id: item.postId,
-      title: item.postProfile,
-      description: item.postDesc,
-      techStack: item.postTechStack.join(", "),
-      experience: item.reqExperience
-    }));
+  handleJobCreation = (newJobPost: JobPost): void => {
+    newJobPost.id = this.jobPosts.length + 1;
+    this.jobPosts.push(newJobPost);
+    this.httpClient.post('http://localhost:8080/createJobPost',
+      newJobPost,
+    ).subscribe({
+      next: (response) => console.log('Job post created successfully:', response),
+      error: (err) => console.error('Error creating job post:', err)
+    });
   }
 }
 
