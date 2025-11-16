@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { JobPost } from './models/job-post.model';
 import { JobListComponent } from './job-list/job-list.component';
+import { JobCreateComponent } from "./job-create/job-create.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, JobListComponent],
+  imports: [CommonModule, JobListComponent, JobCreateComponent, JobCreateComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

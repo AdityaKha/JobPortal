@@ -1,0 +1,18 @@
+<mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput>
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Tech Stack</mat-label>
+    <mat-select (selectionChange)="onTechStackChange($event)" multiple>
+        @for (item of ["Core Java", "J2EE", "Spring Boot", "Hibernate"]; track $index) {
+        <mat-option [value]="item">
+            {{item}}
+        </mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Textarea</mat-label>
+    <textarea matInput></textarea>
+</mat-form-field>
