@@ -1,2 +1,20 @@
-<app-job-list [jobPosts]="jobPosts"></app-job-list>
-<job-create (postSubmit)="handleJobCreation($event)"></job-create>
+<mat-drawer-container class="example-container" hasBackdrop>
+    <mat-drawer #drawer mode=side>
+        <nav>
+            <a mat-button routerLink="/job-list" (click)="drawer.toggle()">Job Listings</a>
+            <a mat-button routerLink="/create-job" (click)="drawer.toggle()">Create Job Post</a>
+        </nav>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar>
+            <button matButton="elevated" (click)="drawer.toggle()">
+                <i class="material-icons">menu</i>
+            </button>
+            <span>
+                <h2> Job Portal</h2>
+            </span>
+            <span class="example-spacer"></span>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

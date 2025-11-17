@@ -1,42 +1,38 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { JobPost } from "../models/job-post.model";
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatOption, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-
+import { JobHandlerService } from "../service/job-handler.service";
+import { FormsModule } from "@angular/forms";
 @Component({
     selector: "job-create",
     templateUrl: "./job-create.component.html",
     styleUrls: ["./job-create.component.sass"],
-    imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+    imports: [
+        FormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatOption,
+        MatSelectModule,
+    ],
 })
-export class JobCreateComponent {
+export class JobCreateComponent implements OnInit {
     jobPost: JobPost = new JobPost();
 
-    onTechStackChange = (event: MatSelectChange): void =>
-        this.jobPost.techStack = event.value;
+    constructor(private jobHandlerService: JobHandlerService) { }
 
-    onExperienceChange = (event: Event): number =>
-        this.jobPost.experience = Number((event.target as HTMLInputElement).value);
-
-    onDescriptionChange(event: Event): void {
-        const inputElement = event.target as HTMLInputElement;
-        this.jobPost.description = inputElement.value;
+    ngOnInit(): void {
+        if (history.state.jobPost) {
+            console.log(history.state);
+            this.jobPost = history.state.jobPost
+        }
     }
 
-    onTitleChange(event: Event): void {
-        const inputElement = event.target as HTMLInputElement;
-        this.jobPost.title = inputElement.value;
-    }
-
-    
-    @Output() 
-    postSubmit: EventEmitter<JobPost> = new EventEmitter<JobPost>();
-    
-    
-    onJobCreate(): void {
-        console.log(this.jobPost.toString());
-        this.postSubmit.emit(this.jobPost);
-    }
+    onJobCreate = (): void =>
+        this.jobHandlerService.createNewJob(this.jobPost);
 }

@@ -5,7 +5,7 @@
   <mat-card class="job-card">
 
     <mat-card-title>
-    {{job.id}}  {{ job.title }}
+      {{job.id}} {{ job.title }}
     </mat-card-title>
 
     <mat-card-content>
@@ -27,6 +27,14 @@
         }
       </ul>
 
+      <mat-card-actions>
+        <button mat-raised-button (click)="onDelete(job)">
+          <i class="material-icons">delete</i>
+        </button>
+        <button mat-raised-button (click)="onEdit(job)">
+          <i class="material-icons">edit</i>
+        </button>
+      </mat-card-actions>
     </mat-card-content>
 
   </mat-card>
