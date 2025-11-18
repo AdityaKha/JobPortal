@@ -4,17 +4,33 @@ import { MatCardModule } from '@angular/material/card';
 import { JobHandlerService } from "../service/job-handler.service";
 import { MatButtonModule } from "@angular/material/button";
 import { Router } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 @Component({
     selector: "app-job-list",
     templateUrl: "./job-list.component.html",
     styleUrls: ["./job-list.component.sass"],
-    imports: [MatCardModule, MatButtonModule],
+    imports: [MatCardModule, MatButtonModule, FormsModule],
 })
 export class JobListComponent {
 
     constructor(private jobHandlerService: JobHandlerService, private router: Router) { }
 
     jobPosts: JobPost[] = [];
+
+    searchTerm: string = '';
+
+
+    onSearchChange() {
+        if (this.searchTerm.trim() === '') {
+            this.jobHandlerService.getAllJobs().then(results => {
+                this.jobPosts = results;
+            });
+            return;
+        }
+        this.jobHandlerService.searchJobs(this.searchTerm).then(results => {
+            this.jobPosts = results;
+        });
+    }
 
     async ngOnInit(): Promise<void> {
         this.jobPosts = await this.jobHandlerService.getAllJobs();

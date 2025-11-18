@@ -7,39 +7,49 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class JobHandlerService {
-
-  jobPosts: JobPost[] = [];
+  private readonly API_URL = 'http://localhost:8080/jobPost';
 
   constructor(private httpClient: HttpClient) { }
 
-
   createNewJob = (jobPost: JobPost): void => {
-    jobPost.id = this.jobPosts.length + 1;
-    this.jobPosts.push(jobPost);
-    this.httpClient.post('http://localhost:8080/createJobPost',
-      jobPost,
-    ).subscribe({
+    this.httpClient.post(this.API_URL, jobPost).subscribe({
       next: (response) => console.log('Job post created successfully:', response),
       error: (err) => console.error('Error creating job post:', err)
     });
   }
+
   getAllJobs = async (): Promise<JobPost[]> => {
     try {
-      const response = await firstValueFrom(this.httpClient.get<JobPost[]>('http://localhost:8080/jobPosts'));
-      this.jobPosts = response as JobPost[];
-      return this.jobPosts;
+      const response = await firstValueFrom(this.httpClient.get<JobPost[]>(this.API_URL + 's'));
+      return response as JobPost[];
     } catch (err) {
-      return this.jobPosts;
+      return [];
     }
   }
 
-  deleteJob = (jobPost: JobPost): void => {
-    this.httpClient.delete(`http://localhost:8080/jobPost/`, {
-      body: jobPost
-    })
+  updateJob(jobPost: JobPost): void {
+    this.httpClient.put(this.API_URL, jobPost)
       .subscribe({
-        next: (response) => console.log('Job post deleted successfully:', response),
-        error: (err) => console.error('Error deleting job post:', err)
+        next: (response) => console.log('Job post updated successfully:', response),
+        error: (err) => console.error('Error updating job post:', err)
       });
+  }
+
+  deleteJob = (jobPost: JobPost): void => {
+    this.httpClient.delete(this.API_URL, {
+      body: jobPost
+    }).subscribe({
+      next: (response) => console.log('Job post deleted successfully:', response),
+      error: (err) => console.error('Error deleting job post:', err)
+    });
+  }
+
+  searchJobs = async (searchTerm: string): Promise<JobPost[]> => {
+    try {
+      const response = await firstValueFrom(this.httpClient.get<JobPost[]>(`${this.API_URL}s/${searchTerm}`));
+      return response as JobPost[];
+    } catch (err) {
+      return [];
+    }
   }
 }

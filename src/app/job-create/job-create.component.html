@@ -2,6 +2,10 @@
     <mat-card-title>Create Job Post</mat-card-title>
     <mat-card-content class="job-create-form">
         <mat-form-field>
+            <mat-label>Id</mat-label>
+            <input matInput type="text" [(ngModel)]="jobPost.id">
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Title</mat-label>
             <input matInput type="text" [(ngModel)]="jobPost.title">
         </mat-form-field>

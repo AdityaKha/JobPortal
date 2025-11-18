@@ -23,16 +23,18 @@ import { FormsModule } from "@angular/forms";
 })
 export class JobCreateComponent implements OnInit {
     jobPost: JobPost = new JobPost();
-
+    updateMode: boolean = false;
     constructor(private jobHandlerService: JobHandlerService) { }
 
     ngOnInit(): void {
         if (history.state.jobPost) {
+            this.updateMode = true;
             console.log(history.state);
             this.jobPost = history.state.jobPost
         }
     }
 
-    onJobCreate = (): void =>
+    onJobCreate = (): void => this.updateMode ?
+        this.jobHandlerService.updateJob(this.jobPost) :
         this.jobHandlerService.createNewJob(this.jobPost);
 }

@@ -1,3 +1,7 @@
+<div class="search-container">
+  <input type="text" placeholder="Search jobs..." [(ngModel)]="searchTerm" (input)="onSearchChange()" />
+</div>
+
 <div class="job-container">
 
   @for (job of jobPosts; track job.id) {
